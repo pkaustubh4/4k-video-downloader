@@ -1,7 +1,10 @@
 import os
 import yt_dlp
 import gradio as gr
+import spaces
 
+# This decorator satisfies Hugging Face's ZeroGPU requirement so our script can run
+@spaces.GPU
 def download_video_interface(url):
     output_path = './downloads'
     os.makedirs(output_path, exist_ok=True)
@@ -41,5 +44,4 @@ with gr.Blocks(title="4K YouTube Downloader") as demo:
     
     btn.click(fn=download_video_interface, inputs=url_input, outputs=[file_output, status_output])
 
-# Note: share=True is omitted here because Hugging Face creates a permanent URL for you automatically!
 demo.launch()
